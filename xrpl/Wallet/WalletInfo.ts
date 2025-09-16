@@ -2,7 +2,6 @@ import dotenv from "dotenv"
 import path from "path"
 import { Client, Wallet } from "xrpl"
 
-// .env 파일 로드
 dotenv.config({ path: path.join(process.cwd(), ".env") })
 
 export async function WalletInfo() {
