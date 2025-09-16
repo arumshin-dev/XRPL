@@ -2,7 +2,7 @@ import dotenv from "dotenv"
 import path from "path"
 import { Client, Wallet, Transaction} from "xrpl"
 
-dotenv.config({ path: path.join(__dirname, "..", ".env") })
+dotenv.config({ path: path.join(process.cwd(), ".env") })
 
 export async function AccountSet() {
   const client = new Client("wss://s.devnet.rippletest.net:51233")
