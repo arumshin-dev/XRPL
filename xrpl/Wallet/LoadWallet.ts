@@ -2,8 +2,7 @@ import dotenv from "dotenv"
 import path from "path"
 import { Client, Wallet } from "xrpl"
 
-// .env 로드 (상위 폴더 기준)
-dotenv.config({ path: path.join(__dirname, "..", ".env") })
+dotenv.config({ path: path.join(process.cwd(), ".env") })
 
 async function loadWallet() {
   const client = new Client("wss://s.devnet.rippletest.net:51233")
