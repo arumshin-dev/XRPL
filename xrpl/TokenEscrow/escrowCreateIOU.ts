@@ -3,7 +3,7 @@ import { encodeForSigning, encode } from "ripple-binary-codec"
 import { sign as kpSign, deriveKeypair } from "ripple-keypairs"
 import path from "path"
 import dotenv from "dotenv"
-dotenv.config({ path: path.join(__dirname, "..", ".env") })
+dotenv.config({ path: path.join(process.cwd(), ".env") })
 
 function now() { return Math.floor(Date.now() / 1000) }
 
