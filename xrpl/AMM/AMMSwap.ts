@@ -2,7 +2,7 @@ import { Client, Wallet, Transaction } from "xrpl"
 import path from "path"
 import dotenv from "dotenv"
 
-dotenv.config({ path: path.join(__dirname, "..", ".env") })
+dotenv.config({ path: path.join(process.cwd(), ".env") })
 
 /**
  * AMMSwap (실제로는 Payment 트랜잭션 활용)
