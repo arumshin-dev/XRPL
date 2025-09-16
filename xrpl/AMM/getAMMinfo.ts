@@ -2,7 +2,7 @@ import { Client, Wallet } from "xrpl"
 import path from "path"
 import dotenv from "dotenv"
 
-dotenv.config({ path: path.join(__dirname, "..", ".env") })
+dotenv.config({ path: path.join(process.cwd(), ".env") })
 
 /**
  * 특정 AMM 풀의 정보 조회
