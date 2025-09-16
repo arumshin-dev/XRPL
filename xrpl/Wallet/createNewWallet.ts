@@ -2,8 +2,6 @@ import dotenv from 'dotenv'
 import path from 'path'
 import { Wallet } from 'xrpl'
 
-dotenv.config({ path: path.join(__dirname, '..', '.env') })
-
 export async function createNewWallet() {
   try {
     // 1. 새 지갑 생성
