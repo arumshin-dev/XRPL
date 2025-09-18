@@ -5,7 +5,9 @@ import path from "path"
 import dotenv from "dotenv"
 dotenv.config({ path: path.join(process.cwd(), ".env") })
 
-function now() { return Math.floor(Date.now() / 1000) }
+function Now() {
+  return Math.floor(Date.now() / 1000) - 946_684_800
+}
 
 export async function escrowCreateIOU() {
   const client = new Client("wss://s.devnet.rippletest.net:51233")
@@ -26,12 +28,12 @@ export async function escrowCreateIOU() {
       Account: user.address,              // 소스 = User
       Destination: user2.address,         // 목적지 = User2 (Merchant)
       Amount: {
-        currency: "ABC",                  // 예시 통화 코드
+        currency: "ABC",                  // 통화 코드
         issuer: admin.address,            // IOU 발행자 (Admin)
-        value: "50"                       // 문자열 수치
+        value: "10"                       // 문자열 수치
       } as any,
-      FinishAfter: now() + 600,           // 10분 후 해제 가능
-      CancelAfter: now() + 3600           // 60분 후 취소 가능
+      FinishAfter: Now() + 10,
+      CancelAfter: Now() + 150        // 150초 후 취소 가능
       // Condition: "<hex>"               // 조건부 escrow 시
     }
 
