@@ -32,7 +32,7 @@ export async function escrowCreateIOU() {
         issuer: admin.address,            // IOU 발행자 (Admin)
         value: "10"                       // 문자열 수치
       } as any,
-      FinishAfter: Now() + 10,
+      FinishAfter: Now() + 10,        // 10초 후 취소 가능
       CancelAfter: Now() + 150        // 150초 후 취소 가능
       // Condition: "<hex>"               // 조건부 escrow 시
     }
