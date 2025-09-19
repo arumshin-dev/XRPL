@@ -12,7 +12,7 @@ export async function escrowFinish() {
   const USER2_SEED = process.env.USER2_SEED!  // 목적지(User2, Finisher)
 
   const ownerWallet    = Wallet.fromSeed(USER_SEED)   // Escrow 소스
-  const finisherWallet = Wallet.fromSeed(USER2_SEED)  // Finish 실행 주체
+  const finisherWallet = Wallet.fromSeed(USER2_SEED)  // Finish 실행 주체 (Escrow 타겟, 소스, 제3자 모두 가능)
 
   try {
     // EscrowCreate 스크립트 실행 후 콘솔에 출력된 Sequence 값
@@ -20,13 +20,13 @@ export async function escrowFinish() {
 
     const tx: Transaction = {
       TransactionType: "EscrowFinish",
-      Account: finisherWallet.address,  // Finish 실행자
+      Account: finisherWallet.address,  // Finish 실행 주체
       Owner: ownerWallet.address,       // Escrow 소스 주소
       OfferSequence: OFFER_SEQUENCE
     }
 
     const prepared = await client.autofill(tx)
-    const signed = finisherWallet.sign(prepared)
+    const signed = finisherWallet.sign(prepared) // Escrow 완료 주체가 서명
     const result = await client.submitAndWait(signed.tx_blob)
 
     console.log(JSON.stringify(result, null, 2))
