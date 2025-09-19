@@ -19,7 +19,7 @@ export async function sendXRP() {
       TransactionType: "Payment",
       Account: admin.address,
       Destination: user.address,
-      Amount: "1000000" // 10 XRP 
+      Amount: "10000000" // 10 XRP 
     }
 
     const prepared = await client.autofill(tx)
