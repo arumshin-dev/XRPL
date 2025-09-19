@@ -24,7 +24,14 @@ export async function authorizeHolder() {
     Holder: user.address
     //Flags: { tfMPTUnauthorize: true } // 해제하고 싶을 때만 사용
   }
-
+  
+// Opt-in 할 때는 다음과 같이
+// const tx: Transaction = {
+//    TransactionType: "MPTokenAuthorize",
+//    Account: user.address,
+//    MPTokenIssuanceID: ISSUANCE_ID,
+//  }
+  
   try {
     const prepared = await client.autofill(tx)
     const signed = admin.sign(prepared) // 변경해서 사용!
