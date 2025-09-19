@@ -33,7 +33,7 @@ export async function escrowCreateMPT() {
       Amount: {
         mpt_issuance_id: ISSUANCE_ID,
         value: "50"
-      } as any,                            // (타이핑 미지원 시 any)
+      } as any,                            
       FinishAfter: Now() + 30,
       CancelAfter: Now() + 120
     }
