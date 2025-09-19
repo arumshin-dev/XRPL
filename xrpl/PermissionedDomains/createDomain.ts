@@ -18,7 +18,7 @@ export async function createDomain() {
       TransactionType: "PermissionedDomainSet",
       Account: admin.address,
       // DomainID 생략! (새 도메인 생성)
-      AcceptedCredentials: [
+      AcceptedCredentials: [ //도메인 접근 권한을 부여할 Credential 목록을 아래와 같이 추가하면 됨
         {
           Credential: {
             Issuer: admin.address,
