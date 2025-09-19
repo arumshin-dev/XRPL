@@ -20,7 +20,7 @@ export async function sendIOU() {
       Account: admin.address,
       Destination: user.address,
       Amount: {
-        currency: "XYZ",
+        currency: "ABC",
         issuer: admin.address,
         value: "100"
       }
