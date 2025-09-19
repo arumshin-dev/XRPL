@@ -20,7 +20,7 @@ async function allowTrust() {
     Account: adminWallet.address,    // 발행자(RequireAuth 설정된 계정)
     LimitAmount: {
       currency: 'ABC',
-      issuer: userWallet.address,   // 
+      issuer: userWallet.address,   // 발행자가 TrustLine 형성을 승인해줄 계정
       value: '0'
     },
     Flags: 0x00010000               // tfSetAuth = 승인
