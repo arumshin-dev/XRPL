@@ -23,7 +23,7 @@ export async function escrowCreateMPT() {
 
   try {
     // MPTokensV1의 CreateIssuance 발행 결과에서 복사한 48hex Issuance ID를 이곳에 넣음
-    const ISSUANCE_ID = "0049CE349E4215DD8AC6196A0A5027DF489AEC3B17BD6211"
+    const ISSUANCE_ID = ""
 
     // MPT EscrowCreate: Amount는 MPTAmount({ mpt_issuance_id, value })
     const tx: Transaction = {
