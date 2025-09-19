@@ -27,13 +27,7 @@ npx ts-node xrpl/MPTokensV1/sendMPT.ts
 * Admin → User로 MPT 전송 (`Amount: { mpt_issuance_id, value }`)  
 * v1은 직접 결제만 지원  
 ---
-### (옵션) 4. 발행본 락/언락
-```bash
-npx ts-node xrpl/MPTokensV1/setIssuance.ts <lock|unlock> [holderAddress]
-``` 
-* 발행자가 발행본 전체 또는 특정 홀더만 잠금/해제  
----
-### (옵션) 5. 발행 정의 삭제
+### (옵션) 4. 발행 정의 삭제
 ```bash
 npx ts-node xrpl/MPTokensV1/destroyIssuance.ts
 ```
@@ -46,7 +40,6 @@ npx ts-node xrpl/MPTokensV1/destroyIssuance.ts
 * createIssuance 실행 → 콘솔에 IssuanceID 출력 (모든 후속 단계에서 사용)  
 * authorizeHolder 실행 → User가 해당 발행본 보유 가능  
 * sendMPT 실행 → User 지갑에 지정한 수량의 MPT 도착 (`tesSUCCESS`)  
-* setIssuance 실행 → 글로벌 또는 특정 홀더만 잠금/해제 반영  
 * destroyIssuance 실행 → 발행 정의 삭제, Explorer에서 `tesSUCCESS` 확인  
 
 실패 시:
@@ -58,4 +51,5 @@ npx ts-node xrpl/MPTokensV1/destroyIssuance.ts
 
 ## 🔍 추가 참고
 전체 코드 / 상세 실행 로그 / 필드 해석은 Notion 문서 참고 → [MPTokensV1](https://catalyze-research.notion.site/MPtokensV1-241898c680bf801694fffcf16c9ef20c?source=copy_link)
+
 
