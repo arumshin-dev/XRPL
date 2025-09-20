@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XRPL Express API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .api-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .api-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .api-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .api-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .api-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .endpoint-list {
+            list-style: none;
+        }
+
+        .endpoint-list li {
+            background: #f8f9fa;
+            margin: 0.5rem 0;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .method {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .method.post {
+            color: #007bff;
+        }
+
+        .method.get {
+            color: #28a745;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 3rem;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #28a745;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .health-check {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .health-status {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 XRPL Express API</h1>
+            <p>XRPL 핵심 기능을 위한 RESTful API 서버</p>
+        </div>
+
+        <div class="health-check">
+            <div class="health-status">
+                <span class="status-indicator"></span>
+                서버 상태: <span id="server-status">확인 중...</span>
+            </div>
+        </div>
+
+        <div class="api-grid">
+            <div class="api-card">
+                <h3>💼 Wallet</h3>
+                <p>지갑 생성, 로드, 펀딩 및 정보 조회</p>
+                <ul class="endpoint-list">
+                    <li><span class="method post">POST</span> /api/wallet/create</li>
+                    <li><span class="method post">POST</span> /api/wallet/load</li>
+                    <li><span class="method post">POST</span> /api/wallet/fund</li>
+                    <li><span class="method get">GET</span> /api/wallet/info/:address</li>
+                </ul>
+            </div>
+
+            <div class="api-card">
+                <h3>💸 Payment</h3>
+                <p>XRP 및 IOU 토큰 전송</p>
+                <ul class="endpoint-list">
+                    <li><span class="method post">POST</span> /api/payment/xrp</li>
+                    <li><span class="method post">POST</span> /api/payment/iou</li>
+                </ul>
+            </div>
+
+            <div class="api-card">
+                <h3>🤝 TrustSet</h3>
+                <p>신뢰선 생성 및 승인</p>
+                <ul class="endpoint-list">
+                    <li><span class="method post">POST</span> /api/trustset/create</li>
+                    <li><span class="method post">POST</span> /api/trustset/authorize</li>
+                </ul>
+            </div>
+
+            <div class="api-card">
+                <h3>⚙️ AccountSet</h3>
+                <p>계정 플래그 및 설정 관리</p>
+                <ul class="endpoint-list">
+                    <li><span class="method post">POST</span> /api/accountset/flags</li>
+                </ul>
+            </div>
+
+            <div class="api-card">
+                <h3>🎫 Credential</h3>
+                <p>신원 증명 발급, 수락, 조회, 삭제</p>
+                <ul class="endpoint-list">
+                    <li><span class="method post">POST</span> /api/credential/create</li>
+                    <li><span class="method post">POST</span> /api/credential/accept</li>
+                    <li><span class="method get">GET</span> /api/credential/check/:address</li>
+                    <li><span class="method post">POST</span> /api/credential/delete</li>
+                </ul>
+            </div>
+
+            <div class="api-card">
+                <h3>📈 Permissioned DEX</h3>
+                <p>권한 기반 탈중앙화 거래소</p>
+                <ul class="endpoint-list">
+                    <li><span class="method post">POST</span> /api/permissioned-dex/offer/create</li>
+                    <li><span class="method get">GET</span> /api/permissioned-dex/book</li>
+                    <li><span class="method post">POST</span> /api/permissioned-dex/offer/cancel</li>
+                </ul>
+            </div>
+
+            <div class="api-card">
+                <h3>🏛️ Permissioned Domains</h3>
+                <p>도메인 기반 접근 권한 관리</p>
+                <ul class="endpoint-list">
+                    <li><span class="method post">POST</span> /api/permissioned-domains/create</li>
+                    <li><span class="method post">POST</span> /api/permissioned-domains/delete</li>
+                    <li><span class="method get">GET</span> /api/permissioned-domains/info/:domainId</li>
+                </ul>
+            </div>
+
+            <div class="api-card">
+                <h3>🔒 Token Escrow</h3>
+                <p>IOU 및 MPT 에스크로 관리</p>
+                <ul class="endpoint-list">
+                    <li><span class="method post">POST</span> /api/token-escrow/create/iou</li>
+                    <li><span class="method post">POST</span> /api/token-escrow/create/mpt</li>
+                    <li><span class="method post">POST</span> /api/token-escrow/finish</li>
+                    <li><span class="method post">POST</span> /api/token-escrow/cancel</li>
+                </ul>
+            </div>
+
+            <div class="api-card">
+                <h3>🪙 MPT (Multi-Purpose Token)</h3>
+                <p>MPT 발행, 승인, 전송, 삭제</p>
+                <ul class="endpoint-list">
+                    <li><span class="method post">POST</span> /api/mpt/issuance/create</li>
+                    <li><span class="method post">POST</span> /api/mpt/authorize</li>
+                    <li><span class="method post">POST</span> /api/mpt/send</li>
+                    <li><span class="method post">POST</span> /api/mpt/issuance/destroy</li>
+                </ul>
+            </div>
+
+            <div class="api-card">
+                <h3>📦 Batch</h3>
+                <p>배치 트랜잭션 처리</p>
+                <ul class="endpoint-list">
+                    <li><span class="method post">POST</span> /api/batch/all-or-nothing</li>
+                    <li><span class="method post">POST</span> /api/batch/independent</li>
+                    <li><span class="method post">POST</span> /api/batch/only-one</li>
+                    <li><span class="method post">POST</span> /api/batch/until-failure</li>
+                </ul>
+            </div>
+
+            <div class="api-card">
+                <h3>🌊 AMM</h3>
+                <p>자동화된 마켓 메이커</p>
+                <ul class="endpoint-list">
+                    <li><span class="method post">POST</span> /api/amm/create</li>
+                    <li><span class="method get">GET</span> /api/amm/info</li>
+                    <li><span class="method post">POST</span> /api/amm/deposit</li>
+                    <li><span class="method post">POST</span> /api/amm/withdraw</li>
+                    <li><span class="method post">POST</span> /api/amm/vote</li>
+                </ul>
+            </div>
+
+            <div class="api-card">
+                <h3>🖥️ Server</h3>
+                <p>서버 정보 및 상태 확인</p>
+                <ul class="endpoint-list">
+                    <li><span class="method get">GET</span> /api/server/info</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>XRPL Devnet: wss://s.devnet.rippletest.net:51233</p>
+            <p>Explorer: <a href="https://devnet.xrpl.org/" target="_blank" style="color: #fff;">https://devnet.xrpl.org/</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Health check
+        async function checkHealth() {
+            try {
+                const response = await fetch('/health');
+                const data = await response.json();
+                document.getElementById('server-status').textContent = '정상 운영 중';
+                document.querySelector('.status-indicator').style.background = '#28a745';
+            } catch (error) {
+                document.getElementById('server-status').textContent = '연결 실패';
+                document.querySelector('.status-indicator').style.background = '#dc3545';
+            }
+        }
+
+        // Check health on page load
+        checkHealth();
+        
+        // Check health every 30 seconds
+        setInterval(checkHealth, 30000);
+    </script>
+</body>
+</html>
